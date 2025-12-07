@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HAHAHAHAPPPPYYYY BIRTHDAAAAAY TOOOO YOUUU MY SWEEET LOVE, CHRISTA</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #f8e8ec, #FFD1DC);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+    }
+
+    /* ✅ NEW FRONT OVERLAY BACKGROUND (SAFE ADD) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("overlay.gif") center / cover no-repeat; /* ← PUT YOUR GIF OR IMAGE HERE */
+      opacity: 0.25; /* Adjust transparency */
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 50px;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 3s ease, pulseBorder 2s infinite alternate;
+      position: relative;
+      z-index: 2;
+      border: 4px solid #FFB6C1;
+    }
+
+    @keyframes pulseBorder {
+      0% { box-shadow: 0 0 20px #FFB6C1; border-color: #FFB6C1; }
+      50% { box-shadow: 0 0 35px #FF69B4; border-color: #FF69B4; }
+      100% { box-shadow: 0 0 20px #FFB6C1; border-color: #FFB6C1; }
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #4b3049;
+    }
+
+    p {
+      font-size: 16px;
+      color: #5a4a57;
+      line-height: 1.7;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border-radius: 30px;
+      border: none;
+      background: #FDFD96;
+      color: #836953;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #FFD1DC;
+      transform: translateY(-2px);
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .hidden {
+      display: none;
+      margin-top: 25px;
+      font-style: italic;
+      color: #4b3049;
+      animation: fadeIn 3.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: -10px; top: 0; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+      30% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+
+    .music-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 18px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 20;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .music-controls button {
+      margin: 0;
+      padding: 6px 14px;
+      font-size: 12px;
+    }
+
+    .music-controls input[type="range"] {
+      width: 90px;
+    }
+
+    #seekBar {
+      width: 120px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio id="clickSound" src="click.mp3"></audio>
+  <audio id="yesSound" src="yes.mp3"></audio>
+  <audio id="noSound" src="no.mp3"></audio>
+
+  <audio id="bgm" loop autoplay muted>
+    <source src="bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-controls">
+    <button id="playPause">❚❚ / ▷</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.6">
+    <input type="range" id="seekBar" min="0" max="100" step="0.1" value="0">
+  </div>
+
+  <div id="hearts"></div>
+
+  <div class="card">
+    <h1>to my sweeet angel babyyy, christa ૮･ﻌ･ა</h1>
+    <p>i'm sososososososo beyooond happy that you hatched, my love</p>
+
+    <button onclick="reveal()">open :B</button>
+
+    <div id="secret" class="hidden">
+      there's Only 1 right answer,,,
+      <div class="button-row">
+        <button onclick="goYes()">yes</button>
+        <button onclick="goNo()">f*ck NOOO!!!</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bgm = document.getElementById("bgm");
+    const clickSound = document.getElementById("clickSound");
+    const yesSound = document.getElementById("yesSound");
+    const noSound = document.getElementById("noSound");
+    const playPauseBtn = document.getElementById("playPause");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const seekBar = document.getElementById("seekBar");
+
+    let userPaused = false;
+
+    document.addEventListener("click", () => {
+      bgm.muted = false;
+      bgm.volume = volumeSlider.value;
+      if (!userPaused) bgm.play();
+    }, { once: true });
+
+    playPauseBtn.addEventListener("click", () => {
+      if (bgm.paused) {
+        userPaused = false;
+        bgm.play();
+      } else {
+        userPaused = true;
+        bgm.pause();
+      }
+    });
+
+    volumeSlider.addEventListener("input", () => {
+      bgm.volume = volumeSlider.value;
+    });
+
+    bgm.addEventListener("timeupdate", () => {
+      seekBar.value = (bgm.currentTime / bgm.duration) * 100 || 0;
+    });
+
+    seekBar.addEventListener("input", () => {
+      bgm.currentTime = (seekBar.value / 100) * bgm.duration;
+    });
+
+    function duckBGM() {
+      bgm.volume = 0.2;
+      setTimeout(() => {
+        bgm.volume = volumeSlider.value;
+      }, 700);
+    }
+
+    function reveal() {
+      document.getElementById("secret").style.display = "block";
+      duckBGM();
+      clickSound.currentTime = 0;
+      clickSound.play();
+    }
+
+    function goYes() {
+      duckBGM();
+      yesSound.play();
+      bgm.pause();
+      userPaused = true;
+      setTimeout(() => {
+        window.location.href = "yes.html";
+      }, 600);
+    }
+
+    function goNo() {
+      duckBGM();
+      noSound.play();
+      bgm.pause();
+      userPaused = true;
+      setTimeout(() => {
+        window.location.href = "no.html";
+      }, 600);
+    }
+
+    setInterval(() => {
+      if (bgm.paused && !userPaused) {
+        bgm.play().catch(() => {});
+      }
+    }, 1000);
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 400);
+  </script>
+
+</body>
+</html>

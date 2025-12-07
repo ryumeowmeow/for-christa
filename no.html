@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>she said no x_x</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #f8e8ec, #FFD1DC);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* bg overlay no */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("overlayno.jpg") center / cover no-repeat;
+      opacity: 0.25;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card {
+      background: white;
+      width: 500px;
+      height: 600px;
+      padding: 50px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 1.5s ease;
+      overflow: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: block;
+    }
+
+    h1 {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #4b3049;
+    }
+
+    p {
+      color: #5a4a57;
+      line-height: 1.7;
+      margin: 10px 0;
+    }
+
+    a {
+      margin-top: 25px;
+      display: inline-block;
+      text-decoration: none;
+      color: #4b3049;
+      font-weight: bold;
+    }
+
+    .spoiler-btn {
+      display: inline-block;
+      margin: 15px 0;
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: none;
+      background: #FFD1DC;
+      cursor: pointer;
+      font-weight: bold;
+      color: #4b3049;
+    }
+
+    .spoiler-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s ease;
+    }
+
+    .spoiler-content.show {
+      max-height: 500px; /* enough to show content */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- orig. audio -->
+  <audio id="noSound" src="no.mp3" autoplay></audio>
+
+  <!-- back button audio -->
+  <audio id="backSound" src="back1.mp3"></audio>
+
+  <!-- bgm cont. -->
+  <audio id="bgm" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- card -->
+  <div class="card">
+    <h1>baby, you better go back right NEOW!!! ᵕ_ᵕ̩̩</h1>
+
+    <!-- gif -->
+    <img src="shiningarmor.gif" alt="gif">
+
+    <!-- spoiler but.-->
+    <button class="spoiler-btn" id="spoilerBtn">more...</button>
+
+    <!-- spoiler cont. -->
+    <div class="spoiler-content" id="spoilerContent">
+      <!-- gif2 -->
+      <img src="chess.gif" alt="gif">
+    
+      <p>i might always be the loser when we 1v1, but i know i am a winner in your 🩷୨୧⠀</p>
+      <p>but fr, go back</p>
+    </div>
+
+    <a href="index.html" id="backLink">> go back NOW!!!</a>
+  </div>
+
+  <!-- bgm fades in -->
+  <script>
+    const bgm = document.getElementById("bgm");
+
+    window.addEventListener("load", () => {
+      const savedTime = localStorage.getItem("bgmTime");
+      if (savedTime) bgm.currentTime = parseFloat(savedTime);
+
+      bgm.volume = 0;
+      bgm.play();
+
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 0.6) {
+          vol += 0.01;
+          bgm.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 100);
+    });
+
+    setInterval(() => {
+      if (!bgm.paused) {
+        localStorage.setItem("bgmTime", bgm.currentTime);
+      }
+    }, 500);
+  </script>
+
+  <!-- spoiler tog. -->
+  <script>
+    const spoilerBtn = document.getElementById("spoilerBtn");
+    const spoilerContent = document.getElementById("spoilerContent");
+
+    spoilerBtn.addEventListener("click", () => {
+      spoilerContent.classList.toggle("show");
+      spoilerBtn.textContent = spoilerContent.classList.contains("show") ? "hide" : "more...";
+    });
+  </script>
+
+  <!-- back sound+ -->
+  <script>
+    const backLink = document.getElementById("backLink");
+    const backSound = document.getElementById("backSound");
+
+    backLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      localStorage.setItem("bgmTime", bgm.currentTime);
+
+      backSound.currentTime = 0;
+      backSound.play();
+
+      backSound.onended = () => {
+        window.location.href = backLink.href;
+      };
+    });
+  </script>
+
+</body>
+</html>

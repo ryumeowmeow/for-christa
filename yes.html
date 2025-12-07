@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>she said Yesss!!!</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #f8e8ec, #FFD1DC);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* bg overlay yes */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("overlayyes.png") center / cover no-repeat;
+      opacity: 0.25; /* transparency */
+      z-index: 1; /* behind floating images and card */
+      pointer-events: none;
+    }
+
+    .floating {
+      position: absolute;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+      animation: float 6s ease-in-out infinite;
+      z-index: 2; /* above overlay */
+      pointer-events: auto;
+    }
+
+    .floating:hover {
+      opacity: 0.9;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-40px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .slow { animation-duration: 9s; }
+    .medium { animation-duration: 7s; }
+    .fast { animation-duration: 5s; }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: sparkleFade 1.2s ease-out forwards;
+      box-shadow: 0 0 6px white;
+      z-index: 0;
+    }
+
+    @keyframes sparkleFade {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0); }
+    }
+
+    .card {
+      background: white;
+      width: 570px;
+      height: 700px;
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 3; /* above overlay and floating imgs */
+    }
+
+    h1 {
+      font-family: 'Arial', serif;
+      color: #4b3049;
+      margin: 0;
+    }
+
+    .image-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .inside-img {
+      width: 240px;
+      height: auto;
+      border-radius: 12px;
+      animation: gentleFloat 4s ease-in-out infinite,
+                 glowPulse 3s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    @keyframes gentleFloat {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes glowPulse {
+      0%   { box-shadow: 0 0 10px rgba(43, 59, 131, 0.4); }
+      50%  { box-shadow: 0 0 25px rgba(255, 200, 255, 0.9); }
+      100% { box-shadow: 0 0 10px rgba(74, 142, 197, 0.4); }
+    }
+
+    .spoiler-btn {
+      display: block;
+      margin: 14px auto 0;
+      background: linear-gradient(135deg, #f3c7dc, #e7b6d3);
+      color: #4b3049;
+      border: none;
+      border-radius: 18px;
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .spoiler-wrapper {
+      max-height: 120px;
+      overflow: hidden;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .spoiler-content {
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .spoiler-content.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    a {
+      margin-top: 10px;
+      display: inline-block;
+      text-decoration: none;
+      color: #4b3049;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- imgs floating -->
+  <img src="img1.png" class="floating slow" style="top: 15%; left: 15%;" data-size="350">
+  <img src="img2.png" class="floating medium" style="top: 75%; left: 75%;" data-size="350">
+  <img src="img3.png" class="floating fast" style="top: 15%; left: 85%;" data-size="350">
+  <img src="img4.png" class="floating slow" style="top: 80%; left: 5%;" data-size="300">
+  <img src="img5.png" class="floating slow" style="top: 30%; left: 65%;" data-size="300">
+  <img src="img6.jpg" class="floating slow" style="top: 55%; left: 20%;" data-size="350">
+  <img src="img7.jpg" class="floating slow" style="top: 5%; left: 43.5%;" data-size="300">
+
+  <!-- audio -->
+  <audio id="yesSound" src="yes.mp3" autoplay></audio>
+  <audio id="bgm" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="backSound" src="back.mp3"></audio>
+
+  <!-- card -->
+  <div class="card">
+    <h1>🩷</h1>
+
+    <div class="image-container">
+      <img src="inside.jpg" class="inside-img">
+    </div>
+
+    <button class="spoiler-btn" id="spoilerBtn">🌻🌻🌻🌻🌻🌻🌻</button>
+
+    <div class="spoiler-wrapper">
+      <div class="spoiler-content" id="spoilerText">
+
+        <p>hihihi, my sweet angel. i want to wish you the happiest and bestestest birthday ever!!! your existence and who you are is so unimaginably unique, and just so YOU. i hope today reminds, truly emphasizes, just how unconditionally loved you are by just existing. mama eke is fr the goat for hatching you, love her too ^_^</p>
+        <p>moving forward, it is still unfathomable to me that we've been together for almost as long as we've known each other, and you know what? i'll never regret any of it because of how meaningful this and you are to me. i could go on and on about it, but no words would ever be able to convey it. it is true that no words would ever come close to me conveying how i feel, perceive, and everything in between when it comes to you. you're not just my lover, but also my best friend. you really are such a unique person, and there's only one you to ever exist. anyone who has known and knows you now would say the same about how you--with how you carry yourself individually and with others. they'd say are such a selfless, empathetic, nurturing, caring, beautiful, adorable, grounding, warm, intelligent, witty, lovely, reliable, radiant, and sososo much more of a person. you are so unapologetically yourself, and you truly are easy to make laugh. even beyond that, i care and i love you deeply as a person. like, before you being my best friend or lover, i'll always genuinely receive you with warmth.
+
+the way you carry out to pursue your ambitions or just simply your interests deeply moves me, and i admire you just the same when you are enjoying yourself. whether if that looks like you pacing and listening to music, to you drawing, or to anything that reflects who you are, you move me deeply by just being. you don't know how much you mean to me, and just how much you mean--in general. the effect you have on me and those around you speaks volume too. i hope you know that i will always do my best to be there for you, even when you feel as though the weight of the world is on your shoulder. you aren't alone anymore, and you don't have to go through anything alone, my love. you are deserving of every ounce of love and effort you put out there. if anything, i am sososo proud of you my baby. i am so proud of how far you've come for yourself. i mean, think about it,,, this is the same girl whose anxiety was so much on her that it affected her making sound decisions for herself. not only that, but just your personal growth from then to now. the things you've done to accomplish your goals and dreams really is admirable. i can't wait to see what else you get up to in the future, baby. I AM EXCITED AND I CAN'T WAIT TO SEE US BOTH FLOURISH TOGETHER!!! I LOVE YOU SOSOSOSO MUCH!!!
+</p>
+        <p>yours truly,
+          your sweetest boy
+        </p>
+
+        <!-- spoiler img -->
+    <img src="me.jpg" style="width: 100%; max-width: 260px; border-radius: 12px; margin: 10px auto; display: block;">
+
+      </div>
+    </div>
+
+    <a href="index.html" id="backLink">> stay here, my cutecutecuuute baby</a>
+  </div>
+
+  <!-- bgm fades -->
+  <script>
+    const bgm = document.getElementById("bgm");
+
+    window.addEventListener("load", () => {
+      const savedTime = localStorage.getItem("bgmTime");
+      if (savedTime) bgm.currentTime = parseFloat(savedTime);
+
+      bgm.volume = 0;
+      bgm.play();
+
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 0.6) {
+          vol += 0.01;
+          bgm.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 100);
+    });
+
+    setInterval(() => {
+      if (!bgm.paused) {
+        localStorage.setItem("bgmTime", bgm.currentTime);
+      }
+    }, 500);
+  </script>
+
+  <!-- floating sizes -->
+  <script>
+    document.querySelectorAll('.floating').forEach(img => {
+      const size = img.getAttribute('data-size') || 90;
+      img.style.width = size + 'px';
+    });
+  </script>
+
+  <!-- spoiler -->
+  <script>
+    const btn = document.getElementById('spoilerBtn');
+    const content = document.getElementById('spoilerText');
+
+    btn.addEventListener('click', () => {
+      content.classList.toggle('reveal');
+    });
+  </script>
+
+  <!-- bgm and save -->
+  <script>
+    const backLink = document.getElementById("backLink");
+    const backSound = document.getElementById("backSound");
+
+    backLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      backSound.currentTime = 0;
+      backSound.play();
+      localStorage.setItem("bgmTime", bgm.currentTime);
+
+      backSound.onended = () => {
+        window.location.href = backLink.href;
+      };
+    });
+  </script>
+
+</body>
+</html>
